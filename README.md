@@ -12,4 +12,10 @@
 Conjunto de aplicaciones realizadas con Google Earth Engine.
 
 # Visualización
-Adjuntaré prontamente las aplicaciones publicadas.
+1. [Landsat8 Filter](https://cesarvilca.users.earthengine.app/view/landsat8filter): Filtrado de imágenes Landsat8 usando departamentos de Perú.
+
+Adjuntaré más aplicaciones realizadas con Earth Engine 🚀.
+
+> &nbsp;&middot;&nbsp; Website [vilcagamarracf.github.io](https://vilcagamarracf.github.io/) &nbsp;&middot;&nbsp;
+> GitHub [@vilcagamarracf](https://github.com/vilcagamarracf) &nbsp;&middot;&nbsp;
+> Twitter [@CesarVilca19](https://twitter.com/CesarVilca19)
