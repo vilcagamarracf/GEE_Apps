@@ -83,7 +83,7 @@ var nubesText = ui.Slider({
 
 var mapPanel = ui.Map();
 
-var DEPARTAMENTOS = ee.FeatureCollection('users/CesarVilca/Departamentos_Peru');
+var DEPARTAMENTOS = ee.FeatureCollection('users/CesarVilca/departamentos');
 var VIZ_PARAMS = {bands: ['B4', 'B3', 'B2'], min: 0, max: 0.4, gamma: 1.5};
 
 var selectDepartamentos = ui.Select({
@@ -152,7 +152,7 @@ var runFilter = function(key, icol){
     mapPanel.addLayer(DEPARTAMENTOS.geometry(),{},'Departamentos del Perú')
   } else {
     // Filtrado por departamento
-  var filtrado = DEPARTAMENTOS.filterMetadata('NOMBDEP','equals', departamentos_chng).geometry()
+  var filtrado = DEPARTAMENTOS.filterMetadata('DEPARTAMEN','equals', departamentos_chng).geometry()
   var COLLECTION_ID = 'LANDSAT/LC08/C01/T1_SR';
   var viz = ee.ImageCollection(COLLECTION_ID)
                           .filter(ee.Filter.lte('CLOUD_COVER', nubesText_chng))
@@ -182,7 +182,7 @@ var panel2 = ui.Panel({
 // Adjuntar instrucciones a panel2
 panel2.add(instructionsPanel)
 panel2.add(filterPanel)
-panel2.add(ui.Label('Más información', SUBTITLES_STYLE, 'https://vilcagamarracf.github.io/'))
+panel2.add(ui.Label('Más información', SUBTITLES_STYLE, 'https://github.com/vilcagamarracf/GEE_Apps/blob/main/01%20Landsat8%20Filter/01_Filtrado.js'))
 panel1.add(panel2)
 
 var initGeometry = ee.Geometry.Point([-74.414, -9.097]);
