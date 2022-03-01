@@ -84,42 +84,24 @@ var nubesText = ui.Slider({
 var mapPanel = ui.Map();
 
 var DEPARTAMENTOS = ee.FeatureCollection('users/CesarVilca/departamentos');
+var depsNames = DEPARTAMENTOS.aggregate_array('DEPARTAMEN')
+
 var VIZ_PARAMS = {bands: ['B4', 'B3', 'B2'], min: 0, max: 0.4, gamma: 1.5};
 
 var selectDepartamentos = ui.Select({
-  items: [
-    {label:'AMAZONAS', value:'AMAZONAS'},
-    {label:'ANCASH', value:'ANCASH'},
-    {label:'APURIMAC', value:'APURIMAC'},
-    {label:'AREQUIPA', value:'AREQUIPA'},
-    {label:'AYACUCHO', value:'AYACUCHO'},
-    {label:'CAJAMARCA', value:'CAJAMARCA'},
-    {label:'CUSCO', value:'CUSCO'},
-    {label:'HUANCAVELICA', value:'HUANCAVELICA'},
-    {label:'HUANUCO', value:'HUANUCO'},
-    {label:'ICA', value:'ICA'},
-    {label:'JUNIN', value:'JUNIN'},
-    {label:'LA LIBERTAD', value:'LA LIBERTAD'},
-    {label:'LAMBAYEQUE', value:'LAMBAYEQUE'},
-    {label:'LIMA', value:'LIMA'},
-    {label:'LORETO', value:'LORETO'},
-    {label:'MADRE DE DIOS', value:'MADRE DE DIOS'},
-    {label:'MOQUEGUA', value:'MOQUEGUA'},
-    {label:'PASCO', value:'PASCO'},
-    {label:'PIURA', value:'PIURA'},
-    {label:'PUNO', value:'PUNO'},
-    {label:'SAN MARTIN', value:'SAN MARTIN'},
-    {label:'TACNA', value:'TACNA'},
-    {label:'TUMBES', value:'TUMBES'},
-    {label:'UCAYALI', value:'UCAYALI'}
-    ], 
-  placeholder: 'Departamentos',
-  onChange: function(value) {
-    var departamentos_chng = value
-  },
+  items: [],
+  placeholder: 'Cargando...',
   style: BUTTON_STYLE
 })
 
+depsNames.evaluate(function(deps){
+  selectDepartamentos.items().reset(deps)
+  selectDepartamentos.setPlaceholder('Departamentos')
+  selectDepartamentos.onChange(function(dep){
+    var departamentos_chng = dep
+  })
+})
+  
 filterPanel.add(fecha_ini);
 filterPanel.add(fecha_fin);
 filterPanel.add(nubesText);
