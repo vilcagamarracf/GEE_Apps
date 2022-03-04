@@ -1,13 +1,22 @@
-// Código para filtrar departamentos fue adaptado de:
+// Aplicación 01_Filtrado_V2 por Cesar Vilca
+
+// Desarrollo de una aplicación en Google Earth Engine para visualizar
+// Imágenes Landsat 8 Raw Scenes
+
+// Código para filtrar ee.FeatureCollection fue adaptado de:
 // https://gis.stackexchange.com/questions/330277/using-ui-select-for-administrative-levels-dropdown-in-google-earth-engine
 
 ui.root.clear();
+
+var mapPanel = ui.Map();
+var initGeometry = ee.Geometry.Point([-74.414, -9.097]);
+mapPanel.centerObject(initGeometry, 5);
 
 // Estilos ----------------------------------------------------------------------
 
 var colors = {'cyan': '#24C1E0', 'transparent': '#11ffee00', 'gray': '#F8F9FA'};
 var TITLE_STYLE     = {fontWeight: '400', fontSize: '20px', margin: '16px 0px 10px 16px', color: 'green',backgroundColor: colors.transparent};
-var PARAGRAPH_STYLE = {fontSize: '14px', padding: '0px 0px 10px 8px', backgroundColor: colors.transparent};
+var PARAGRAPH_STYLE = {fontSize: '14px', padding: '0px 16px 10px 8px', backgroundColor: colors.transparent};
 var LABEL_STYLE     = {fontWeight: '50', textAlign: 'center', backgroundColor: colors.transparent};
 var SUBTITLES_STYLE = {fontWeight: 'bold', fontSize: '14px', margin: '14px 0px 14px 16px', backgroundColor: colors.transparent};
 var BUTTON_STYLE    = {width:'185px', padding:'0px 0px 4px 0px', color:'green'};
@@ -16,12 +25,14 @@ var BORDER_STYLE    = '5px solid rgba(97, 97, 97, 0.05)';
 // Panel izquierdo -----------------------------------------------------------------
 
 var panel1 = ui.Panel({
-  style: {width: '450px'},
+  style: {width: '425px', margin: '0px 0px 0px 10px'},
   layout: ui.Panel.Layout.flow('vertical', true),
   widgets:[
-    ui.Label('Prueba de filtrado por Departamentos y Provincias', TITLE_STYLE),
-    ui.Label("Esta aplicación te permite visualizar de forma interactiva los departamentos \
-              y provincias del Perú.", PARAGRAPH_STYLE)
+    ui.Label('Prueba de filtrado por Departamentos, Provincias y Distritos + Landsat 8', TITLE_STYLE),
+    ui.Label("Esta aplicación te permite visualizar de forma interactiva  \
+    imágenes del satélite Landsat 8 Raw Scenes para un distrito \
+    en específico del Perú.", PARAGRAPH_STYLE),
+    ui.Label('Seleccionar:', SUBTITLES_STYLE)
   ]
 });
 
@@ -31,12 +42,15 @@ var instructionsPanel = ui.Panel({
   layout: ui.Panel.Layout.flow('vertical'),
   style: {
     backgroundColor: colors.transparent,
-    width: '220px',
+    width: '180px',
   },
   widgets: [
-    ui.Label('1. Seleccionar Departamento:', SUBTITLES_STYLE),   
-    ui.Label('2. Seleccionar Provincia:', SUBTITLES_STYLE),      
-    ui.Label('3. Seleccionar Distrito:', SUBTITLES_STYLE),      
+    ui.Label('1. Departamento', SUBTITLES_STYLE),   
+    ui.Label('2. Provincia', SUBTITLES_STYLE),      
+    ui.Label('3. Distrito', SUBTITLES_STYLE),      
+    ui.Label('4. Fecha Inicio', SUBTITLES_STYLE),      
+    ui.Label('5. Fecha Fin', SUBTITLES_STYLE),      
+    ui.Label('6. % Nubosidad', SUBTITLES_STYLE),      
   ]
 });
 
@@ -96,7 +110,7 @@ depsNames.evaluate(function(deps){
     
     // Despúes de haber seleccionado un departamento:
     provsDD.setPlaceholder('Ahora selecciona una provincia...')
-    distDD.setPlaceholder('Ahora selecciona una provincia...')
+    distDD.setPlaceholder('Esperando a una provincia...')
     var provincias = getProvs(prov)
     provincias.evaluate(function(provsNames){
       provsDD.items().reset(provsNames)
@@ -170,7 +184,7 @@ add.onClick(function(){
     .filterDate(fecha_ini_chng, fecha_fin_chng)
     .filterBounds(distrito)
     // .filter(ee.Filter.lte('CLOUD_COVER', nubesText_chng))
-    
+  
   print(l8Raw.size())
   print(l8Raw.aggregate_array('system:index'))
   print(l8Raw.aggregate_array('CLOUD_COVER'))
@@ -218,8 +232,5 @@ panel1.add(panel2)
 
 ui.root.add(panel1);
 
-var mapPanel = ui.Map();
-var initGeometry = ee.Geometry.Point([-74.414, -9.097]);
-mapPanel.centerObject(initGeometry, 5);
-
 ui.root.add(mapPanel);
+
