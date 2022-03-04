@@ -9,7 +9,7 @@
 </p>
 
 ## Aplicaciones
-1. [01_Filtrado_V2](https://cesarvilca.users.earthengine.app/view/filtradov2): Filtrado de imágenes Landsat8 usando departamentos de Perú.
+1. [01_Filtrado_V2](https://cesarvilca.users.earthengine.app/view/filtradov2): Visualizador de imágenes Landsat8 mediante el filtrado por distritos del Perú.
 
 Adjuntaré más aplicaciones realizadas con Earth Engine.
 
