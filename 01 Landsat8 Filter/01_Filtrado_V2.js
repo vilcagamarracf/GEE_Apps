@@ -9,6 +9,10 @@
 ui.root.clear();
 
 var mapPanel = ui.Map();
+
+var label_map = ui.Label('Realiza primero el filtrado para visualizar')
+mapPanel.add(label_map)
+
 var initGeometry = ee.Geometry.Point([-74.414, -9.097]);
 mapPanel.centerObject(initGeometry, 5);
 
@@ -28,9 +32,9 @@ var panel1 = ui.Panel({
   style: {width: '425px', margin: '0px 0px 0px 10px'},
   layout: ui.Panel.Layout.flow('vertical', true),
   widgets:[
-    ui.Label('Prueba de filtrado por Departamentos, Provincias y Distritos + Landsat 8', TITLE_STYLE),
+    ui.Label('Filtrado por Departamentos, Provincias y Distritos + Landsat 8', TITLE_STYLE),
     ui.Label("Esta aplicación te permite visualizar de forma interactiva  \
-    imágenes del satélite Landsat 8 Raw Scenes para un distrito \
+    imágenes del satélite Landsat 8 TOA Scenes para un distrito \
     en específico del Perú.", PARAGRAPH_STYLE),
     ui.Label('Seleccionar:', SUBTITLES_STYLE)
   ]
@@ -132,26 +136,23 @@ depsNames.evaluate(function(deps){
 })
 
 // Opciones de Filtrado
-var fecha_ini_chng = '2020-08-01'
-var fecha_ini = ui.Textbox({placeholder: 'YYYY-MM-DD', value: fecha_ini_chng, style: BUTTON_STYLE, 
+var fecha_ini = ui.Textbox({placeholder: 'YYYY-MM-DD', value: '2020-08-01', style: BUTTON_STYLE, 
   onChange: function(text){
-    var fecha_ini_chng = text
+    fecha_ini.setValue(text)
   }});
   
-var fecha_fin_chng = '2020-12-31'
-var fecha_fin = ui.Textbox({placeholder: 'YYYY-MM-DD', value: fecha_fin_chng, style: BUTTON_STYLE,
+var fecha_fin = ui.Textbox({placeholder: 'YYYY-MM-DD', value: '2020-12-31', style: BUTTON_STYLE,
   onChange: function(text){
-    var fecha_fin_chng = text
+    fecha_fin.setValue(text)
   }});
-
-var nubesText_chng = 20
+  
 var nubesText = ui.Slider({
   min: 0,
   max: 100, 
-  value: nubesText_chng, 
-  step: 2,
+  value: 20, 
+  step: 1,
   onChange: function(value) {
-    var nubesText_chng = value
+    nubesText.setValue(value)
   },
   style: {width: '215px'}
 });
@@ -179,18 +180,20 @@ add.onClick(function(){
   
   mapPanel.clear() // Limpiar el mapa cada vez que se cambia de selección
   
-  var imgCol_id = "LANDSAT/LC08/C01/T1"
+  var imgCol_id = "LANDSAT/LC08/C02/T1_TOA"
   var l8Raw = ee.ImageCollection(imgCol_id)
-    .filterDate(fecha_ini_chng, fecha_fin_chng)
+    .filterDate(fecha_ini.getValue(), fecha_fin.getValue())
     .filterBounds(distrito)
-    // .filter(ee.Filter.lte('CLOUD_COVER', nubesText_chng))
+    .filter(ee.Filter.lte('CLOUD_COVER', nubesText.getValue()))
   
   print(l8Raw.size())
-  print(l8Raw.aggregate_array('system:index'))
-  print(l8Raw.aggregate_array('CLOUD_COVER'))
+  // print(l8Raw.aggregate_array('system:id'))
+  // print(l8Raw.aggregate_array('CLOUD_COVER'))
   
+  var imgs_label = ui.Label('Imágenes: ' + l8Raw.size().getInfo());
+  mapPanel.add(imgs_label);
   
-  var l8RawImg = l8Raw.mosaic().multiply(0.00001)
+  var l8RawImg = l8Raw.mosaic()//.multiply(0.00001)
   
   var l8RawImg_vis = {
     bands:['B4','B3','B2'],
@@ -221,10 +224,12 @@ var panel2 = ui.Panel({
 panel2.add(instructionsPanel)
 panel2.add(filterPanel)
 
+var linkWebsite = 'https://github.com/vilcagamarracf/GEE_Apps/blob/main/01%20Landsat8%20Filter/01_Filtrado_V2.js'
+
 var informacion = ui.Label(
   'Más información', 
   SUBTITLES_STYLE, 
-  'https://github.com/vilcagamarracf/GEE_Apps/blob/main/01%20Landsat8%20Filter/01_Filtrado_V2.js'
+  linkWebsite
   )
   
 panel2.add(informacion)
@@ -233,4 +238,3 @@ panel1.add(panel2)
 ui.root.add(panel1);
 
 ui.root.add(mapPanel);
-
