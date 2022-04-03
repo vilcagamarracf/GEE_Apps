@@ -13,6 +13,11 @@
 
 Adjuntaré más aplicaciones realizadas con Earth Engine.
 
+## Referencias
+1. [geeSEBAL](https://github.com/et-brasil/geeSEBAL): Desarrollo de una aplicación en GEE que permite estimar evapotranspiración actual a partir de imágenes Landsat y datos meteorológicos grillados del ERA5.
+
+
+
 ## Contacto
 En estas redes sociales comparto una variedad de contenidos sobre Agricultura de Precisión, programación con Earth Engine y más.
 
