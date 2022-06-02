@@ -75,6 +75,8 @@ var assetDist  = ee.FeatureCollection('users/CesarVilca/distritos')
 
 var depsNames = assetDeps.aggregate_array('DEPARTAMEN')
 
+mapPanel.addLayer(assetDeps.geometry(),{},'Departamentos')
+
 // Funciones de Filtrado
 
 // Dado un departamento -> Obtener sus provincias
@@ -136,12 +138,13 @@ depsNames.evaluate(function(deps){
 })
 
 // Opciones de Filtrado
-var fecha_ini = ui.Textbox({placeholder: 'YYYY-MM-DD', value: '2020-08-01', style: BUTTON_STYLE, 
+var fecha_ini = ui.Textbox({placeholder: 'YYYY-MM-DD', value: '2020-01-01', style: BUTTON_STYLE, 
   onChange: function(text){
     fecha_ini.setValue(text)
   }});
-  
-var fecha_fin = ui.Textbox({placeholder: 'YYYY-MM-DD', value: '2020-12-31', style: BUTTON_STYLE,
+
+var date_now = ee.Date(Date.now()).format('YYYY-MM-dd').getInfo()
+var fecha_fin = ui.Textbox({placeholder: 'YYYY-MM-DD', value: date_now, style: BUTTON_STYLE,
   onChange: function(text){
     fecha_fin.setValue(text)
   }});
