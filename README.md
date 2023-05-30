@@ -15,7 +15,7 @@ Adjuntaré más aplicaciones realizadas con Earth Engine.
 
 ## Referencias
 1. [geeSEBAL](https://github.com/et-brasil/geeSEBAL): Desarrollo de una aplicación en GEE que permite estimar evapotranspiración actual a partir de imágenes Landsat y datos meteorológicos grillados del ERA5.
-
+2. [Ricemon Geoportal](https://ricemon.users.earthengine.app/view/desktop): Geoportal desarrollado para la mejora de la gestión del agua en arrozales de productores rurales peruanos a nivel regional en el valle Chancay - Lambayeque con imágenes satelitales Sentinel-2 procesadas en Google Earth Engine.
 
 
 ## Contacto
