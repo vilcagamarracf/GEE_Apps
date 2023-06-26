@@ -69,9 +69,9 @@ var filterPanel = ui.Panel({
 });
 
 // ASSETS
-var assetDeps  = ee.FeatureCollection('users/CesarVilca/departamentos')
-var assetProvs = ee.FeatureCollection('users/CesarVilca/provincias')
-var assetDist  = ee.FeatureCollection('users/CesarVilca/distritos')
+var assetDeps  = ee.FeatureCollection('users/vilcagamarracf/departamentos')
+var assetProvs = ee.FeatureCollection('users/vilcagamarracf/provincias')
+var assetDist  = ee.FeatureCollection('users/vilcagamarracf/distritos')
 
 var depsNames = assetDeps.aggregate_array('DEPARTAMEN')
 
