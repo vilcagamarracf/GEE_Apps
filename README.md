@@ -9,7 +9,7 @@
 </p>
 
 ## Aplicaciones
-1. [01_Filtrado_V2](https://vilcagamarracf.users.earthengine.app/view/landsat-filter): Visualizador de imágenes Landsat 8 mediante el filtrado por distritos del Perú.
+1. [01_Filtrado_V2](https://vilcagamarracf.users.earthengine.app/view/landsat-8-filter): Visualizador de imágenes Landsat 8 mediante el filtrado por distritos del Perú.
 
 Adjuntaré más aplicaciones realizadas con Earth Engine.
 
