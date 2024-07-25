@@ -1,3 +1,4 @@
+[//]: <> (Banner)
 <p align='center'>
    <img src="GEE_Apps.jpg" alt="GEE Apps Cover"/>
 </p>
